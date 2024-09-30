@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
-import numpy as np
+#import numpy as np
 import argparse
 import os
 
@@ -36,7 +36,7 @@ async def invert(text: str):
 
 @app.get("/data")
 async def get_data():
-    data = {"data": np.random.rand(100).tolist()}
+    data = {"data": [123]}
     return JSONResponse(data)
 
 
