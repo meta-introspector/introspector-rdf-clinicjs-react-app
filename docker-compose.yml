@@ -1,0 +1,7 @@
+services:
+  backend:
+    ports:
+      - "7860:7860"
+    build: .
+    image: introspector-react-browser:latest
+#  frontend:

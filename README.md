@@ -10,9 +10,26 @@ models:
 short_description: Introspector react app
 ---
 
-# Getting Started with Create React App
+# Introspector browser
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project displays and allows a user to browse and interact with a set of data that is available 
+via recursive git submodules, so all data that is allowed is built into the base code.
+The code that is executed can decide if it allows for more data to be loaded from outside.
+So basically we want to point this at some other repos and then call it via urls to load more code.
+
+### Functions
+
+#### Load Datasets
+
+Browse performance result datasets from hugging face and other sources.
+
+#### Run notebooks
+
+Run reports via notebooks
+
+#### Run apps
+
+Load different apps and other servlets like streamlit and gradio via safe containers
 
 ## Available Scripts
 
