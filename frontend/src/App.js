@@ -14,20 +14,24 @@ import {
 
 function App() {
 
-    const [statements, setStatements] = useState([]);
-
-  // function to fetch all statements from BE
-  useEffect(() => {
-    axios
-      .get("http://localhost:7860/data")
-      .then((response) => {
-        setStatements(response.data);
-      })
-      .catch((error) => {
-        console.log("There was an error retrieving the statement list: ", error);
-      });
-  }, []);
-
+    const [statements, setStatements] = useState([
+	"Empty statements"
+    ]);
+    
+    // function to fetch all statements from BE
+    useEffect(() => {
+	axios
+	    .get("/data")
+	    .then((response) => {
+		console.log("Got data ", response.data);
+		setStatements(JSON.stringify(response.data));
+	    })
+	    .catch((error) => {
+		console.log("There was an error retrieving the statement list: ", error);
+		setStatements(JSON.stringify(error));
+	    });
+    }, []);
+    
   return (
     <div className="App">
       <header className="App-header">
