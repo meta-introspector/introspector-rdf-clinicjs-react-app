@@ -27,6 +27,7 @@ ENV HOME=/home/user \
 WORKDIR $HOME/app
 COPY --from=builder /app/build ./static
 COPY app.py app.py
-
+COPY introspector_rdf.py introspector_rdf.py
+COPY frontend/introspector.ttl introspector.ttl
 CMD ["python", "app.py"]
 

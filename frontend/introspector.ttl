@@ -23,3 +23,24 @@
 
   rdfs:isDefinedBy <https://example.org/self-reflective-turtle> ;
   rdfs:isReferencedBy <https://example.org/self-reflective-turtle>.
+
+# Additional Links
+<https://huggingface.co/introspector>
+  rdfs:label "Hugging Face"@en ;
+  rdfs:seeAlso <https://huggingface.co/introspector> ;
+  dcterms:identifier <https://huggingface.co/introspector>.
+
+<https://github.com/meta-introspector>
+  rdfs:label "Github Repositories"@en ;
+  rdfs:seeAlso <https://github.com/meta-introspector> ;
+  dcterms:identifier <https://github.com/meta-introspector>.
+
+<https://h4ck3rm1k3.wordpress.com>
+  rdfs:label "Blog posts"@en ;
+  rdfs:seeAlso <https://h4ck3rm1k3.wordpress.com> ;
+  dcterms:identifier <https://h4ck3rm1k3.wordpress.com>.
+
+<https://x.com/introsp3ctor>
+  rdfs:label "Tweets"@en ;
+  rdfs:seeAlso <https://x.com/introsp3ctor> ;
+  dcterms:identifier <https://x.com/introsp3ctor>.

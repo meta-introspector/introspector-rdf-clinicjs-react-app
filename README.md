@@ -29,10 +29,17 @@ Run reports via notebooks
 
 #### Run apps
 
+#### Models
+
 Load different apps and other servlets like streamlit and gradio via safe containers
+import other results from other huggingface datasets.
+
+##### Views
 create custom displays via iframes.
-create directory to select results
 and display other results from huggingface datasets.
+
+##### Controller
+create directory to select results
 
 #### Generate logos and code 
 

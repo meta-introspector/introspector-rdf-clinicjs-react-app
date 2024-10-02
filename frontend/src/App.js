@@ -28,10 +28,10 @@ function App() {
 	    })
 	    .catch((error) => {
 		console.log("There was an error retrieving the statement list: ", error);
-		setStatements(JSON.stringify(error));
+		setStatements([["error","text",JSON.stringify(error)]]);
 	    });
     }, []);
-    
+    console.log("statements ", statements);
   return (
     <div className="App">
       <header className="App-header">
@@ -42,40 +42,20 @@ function App() {
               aria-label="Experiments"
 	  >
         <TableHeader>
-          <TableColumn>ID</TableColumn>
-	  <TableColumn>Link</TableColumn>
+          <TableColumn>Subject</TableColumn>
+	  <TableColumn>Predicate</TableColumn>
+	  <TableColumn>Object</TableColumn>
         </TableHeader>
+      
           <TableBody>
-	  <TableRow key="hf">
-	  <TableCell><pre><code>Hugging Face</code></pre></TableCell>
-	  <TableCell><a href="https://huggingface.co/introspector">Hugging Face</a></TableCell>
-	   </TableRow>
-
-	  <TableRow key="gh">
-	  <TableCell>
-	  <pre><code>Github Repositories</code></pre></TableCell>
-	  <TableCell><a href="https://github.com/meta-introspector">Github</a></TableCell>
-	  </TableRow>
-
-      	  <TableRow key="bp">
-	  <TableCell>
-	  <pre><code>Blog posts</code></pre></TableCell>
-	  <TableCell><a href="https://h4ck3rm1k3.wordpress.com">Wordpress</a></TableCell>	  
-	  </TableRow>
-
-      	  <TableRow key="tweets">
-	  <TableCell>
-	  <pre><code>Tweets</code></pre></TableCell>
-	  <TableCell><a href="https://x.com/introsp3ctor">Twitter</a></TableCell>	  
-	  </TableRow>
-
-          <TableRow key="statements">
-	  <TableCell>
-	  <pre><code>RDF Statements of knowledge from api</code></pre></TableCell>
-	  <TableCell> {statements} </TableCell>	  
-	  </TableRow>
-
-
+	  {statements.map((statement,index)=>(
+		  <TableRow key={index}>
+		  <TableCell>{statement[0]}</TableCell>
+		  <TableCell>{statement[1]}</TableCell>
+		  <TableCell>{statement[2]}</TableCell>
+		  </TableRow>
+	      
+	  ))}
 	  </TableBody>
       </Table>
         </p>
