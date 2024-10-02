@@ -1,5 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
+import axios from "axios";
+import { useState } from 'react';
+import { useEffect } from 'react';
 import {
   Table,
   TableHeader,
@@ -10,6 +13,21 @@ import {
 } from "@nextui-org/table";
 
 function App() {
+
+    const [statements, setStatements] = useState([]);
+
+  // function to fetch all statements from BE
+  useEffect(() => {
+    axios
+      .get("http://localhost:7860/data")
+      .then((response) => {
+        setStatements(response.data);
+      })
+      .catch((error) => {
+        console.log("There was an error retrieving the statement list: ", error);
+      });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -46,7 +64,13 @@ function App() {
 	  <pre><code>Tweets</code></pre></TableCell>
 	  <TableCell><a href="https://x.com/introsp3ctor">Twitter</a></TableCell>	  
 	  </TableRow>
-  
+
+          <TableRow key="statements">
+	  <TableCell>
+	  <pre><code>RDF Statements of knowledge from api</code></pre></TableCell>
+	  <TableCell> {statements} </TableCell>	  
+	  </TableRow>
+
 
 	  </TableBody>
       </Table>
