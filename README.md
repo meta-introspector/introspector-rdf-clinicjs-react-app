@@ -30,6 +30,14 @@ Run reports via notebooks
 #### Run apps
 
 Load different apps and other servlets like streamlit and gradio via safe containers
+create custom displays via iframes.
+create directory to select results
+and display other results from huggingface datasets.
+
+#### Generate logos and code 
+
+Use ai services to generate logos and html pages for the project, give them feedback,
+use autogpt or other tools.
 
 ## Available Scripts
 

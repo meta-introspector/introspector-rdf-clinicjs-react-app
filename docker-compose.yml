@@ -4,4 +4,9 @@ services:
       - "7860:7860"
     build: .
     image: introspector-react-browser:latest
+    #volumes:
+    #  - type: bind
+    #    source: "frontend/build/static"
+    #    target: "/home/user/app/static"
+
 #  frontend:
