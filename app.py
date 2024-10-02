@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 #import numpy as np
 import argparse
 import os
-
+import introspector_rdf
 HOST = os.environ.get("API_URL", "0.0.0.0")
 PORT = os.environ.get("PORT", 7860)
 parser = argparse.ArgumentParser()
@@ -36,7 +36,20 @@ async def invert(text: str):
 
 @app.get("/data")
 async def get_data():
-    data = {"data": [123]}
+    data = introspector_rdf.data()
+    # data = {"data": [
+    #     dict(
+    #         subject="this",
+    #         predicate="self_reference",
+    #         _object="<SELF>",
+    #     ),
+    #     dict(
+    #         subject="introspector_rdf",
+    #         predicate="data",
+    #         _object=rows,
+    #     ),
+        
+    # ]}
     return JSONResponse(data)
 
 
