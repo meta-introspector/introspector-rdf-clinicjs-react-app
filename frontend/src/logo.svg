@@ -21,7 +21,6 @@
     </filter>
   </defs>
   
-  <rect width="200" height="200" fill="url(#bgGradient)" />
   <circle cx="100" cy="100" r="90" fill="url(#centerGlow)" />
   
   <g filter="url(#dropShadow)">
