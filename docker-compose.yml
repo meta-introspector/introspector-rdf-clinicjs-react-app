@@ -4,9 +4,19 @@ services:
       - "7860:7860"
     build: .
     image: introspector-react-browser:latest
-    #volumes:
-    #  - type: bind
-    #    source: "frontend/build/static"
-    #    target: "/home/user/app/static"
+    volumes:
+    - type: bind
+      source: "frontend/build"
+      target: "/home/user/app/static"
+
+    #   - type: bind
+    #     source: frontend/introspector.ttl
+    #     target: "/home/user/introspector.ttl"
+    #   - type: bind
+    #     source: "."
+    #     target: "/home/user/app/"
+    #   - type: bind
+    #     source: "frontend/build/index.html"
+    #     target: "/home/user/app/index.html"
 
 #  frontend:
