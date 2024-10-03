@@ -2,17 +2,19 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix dcterms: <http://purl.org/dc/terms/>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-<https://example.org/self-reflective-turtle>
+@prefix isp: <https://huggingface.co/spaces/introspector/introspector-react-app#>.
+    
+<isp:self>
   a rdf:Statement ;
   rdfs:label "A self-reflective Turtle RDF file"@en ;
   dcterms:description "A Turtle RDF file that describes itself"@en ;
   dcterms:creator "J. Mike DuPont"@en ;
   dcterms:date "2024-10-02"^^xsd:date ;
   dcterms:format "text/turtle"@en ;
-  dcterms:identifier <https://example.org/self-reflective-turtle> ;
+  dcterms:identifier <isp:self> ;
   dcterms:language "en"@en ;
   dcterms:rights "AGPL 3.0"@en ;
-  dcterms:subject <https://example.org/self-reflective-turtle> ;
+  dcterms:subject <isp:self> ;
   dcterms:title "Self-reflective Turtle RDF file"@en ;
 
   rdf:type rdfs:Resource ;
@@ -21,8 +23,8 @@
 
   rdfs:comment "This RDF file describes itself, including its metadata and structure."@en ;
 
-  rdfs:isDefinedBy <https://example.org/self-reflective-turtle> ;
-  rdfs:isReferencedBy <https://example.org/self-reflective-turtle>.
+  rdfs:isDefinedBy <isp:self> ;
+  rdfs:isReferencedBy <isp:self>.
 
 # Additional Links
 <https://huggingface.co/introspector>

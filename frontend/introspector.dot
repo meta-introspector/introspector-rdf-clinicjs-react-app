@@ -1,0 +1,34 @@
+digraph { 
+ node [ fontname="DejaVu Sans" ] ; 
+	node0 -> node0 [ color=BLACK, label=< <font point-size='10' color='#336633'>dcterms:identifier</font> > ] ;
+	node1 -> node1 [ color=BLACK, label=< <font point-size='10' color='#336633'>rdfs:seeAlso</font> > ] ;
+	node3 -> node3 [ color=BLACK, label=< <font point-size='10' color='#336633'>rdfs:seeAlso</font> > ] ;
+	node2 -> node4 [ color=BLACK, label=< <font point-size='10' color='#336633'>rdf:type</font> > ] ;
+	node2 -> node5 [ color=BLACK, label=< <font point-size='10' color='#336633'>rdf:type</font> > ] ;
+	node2 -> node2 [ color=BLACK, label=< <font point-size='10' color='#336633'>dcterms:identifier</font> > ] ;
+	node2 -> node6 [ color=BLACK, label=< <font point-size='10' color='#336633'>rdfs:seeAlso</font> > ] ;
+	node1 -> node1 [ color=BLACK, label=< <font point-size='10' color='#336633'>dcterms:identifier</font> > ] ;
+	node3 -> node3 [ color=BLACK, label=< <font point-size='10' color='#336633'>dcterms:identifier</font> > ] ;
+	node2 -> node2 [ color=BLACK, label=< <font point-size='10' color='#336633'>dcterms:subject</font> > ] ;
+	node7 -> node7 [ color=BLACK, label=< <font point-size='10' color='#336633'>dcterms:identifier</font> > ] ;
+	node2 -> node2 [ color=BLACK, label=< <font point-size='10' color='#336633'>rdfs:isDefinedBy</font> > ] ;
+	node0 -> node0 [ color=BLACK, label=< <font point-size='10' color='#336633'>rdfs:seeAlso</font> > ] ;
+	node2 -> node2 [ color=BLACK, label=< <font point-size='10' color='#336633'>rdfs:isReferencedBy</font> > ] ;
+	node7 -> node7 [ color=BLACK, label=< <font point-size='10' color='#336633'>rdfs:seeAlso</font> > ] ;
+# https://huggingface.co/introspector node0
+node0 [ shape=none, color=black label=< <table color='#666666' cellborder='0' cellspacing='0' border='1'><tr><td colspan='2' bgcolor='grey'><B>Hugging Face</B></td></tr><tr><td href='https://huggingface.co/introspector' bgcolor='#eeeeee' colspan='2'><font point-size='10' color='#6666ff'>https://huggingface.co/introspector</font></td></tr></table> > ] 
+# https://github.com/meta-introspector node1
+node1 [ shape=none, color=black label=< <table color='#666666' cellborder='0' cellspacing='0' border='1'><tr><td colspan='2' bgcolor='grey'><B>Github Repositories</B></td></tr><tr><td href='https://github.com/meta-introspector' bgcolor='#eeeeee' colspan='2'><font point-size='10' color='#6666ff'>https://github.com/meta-introspector</font></td></tr></table> > ] 
+# isp:self node2
+node2 [ shape=none, color=black label=< <table color='#666666' cellborder='0' cellspacing='0' border='1'><tr><td colspan='2' bgcolor='grey'><B>A self-reflective Turtle RDF file</B></td></tr><tr><td href='isp:self' bgcolor='#eeeeee' colspan='2'><font point-size='10' color='#6666ff'>isp:self</font></td></tr><tr><td align='left'>dcterms:creator</td><td align='left'>&quot;J. Mike DuPont&quot;@en</td></tr><tr><td align='left'>dcterms:date</td><td align='left'>&quot;2024-10-02&quot;^^xsd:date</td></tr><tr><td align='left'>dcterms:description</td><td align='left'>&quot;A Turtle RDF file that describes itself&quot;@en</td></tr><tr><td align='left'>dcterms:format</td><td align='left'>&quot;text/turtle&quot;@en</td></tr><tr><td align='left'>dcterms:language</td><td align='left'>&quot;en&quot;@en</td></tr><tr><td align='left'>dcterms:rights</td><td align='left'>&quot;AGPL 3.0&quot;@en</td></tr><tr><td align='left'>dcterms:title</td><td align='left'>&quot;Self-reflective Turtle RDF file&quot;@en</td></tr><tr><td align='left'>rdfs:comment</td><td align='left'>&quot;This RDF file describes itself, including its metadata and structure.&quot;@en</td></tr></table> > ] 
+# https://h4ck3rm1k3.wordpress.com node3
+node3 [ shape=none, color=black label=< <table color='#666666' cellborder='0' cellspacing='0' border='1'><tr><td colspan='2' bgcolor='grey'><B>Blog posts</B></td></tr><tr><td href='https://h4ck3rm1k3.wordpress.com' bgcolor='#eeeeee' colspan='2'><font point-size='10' color='#6666ff'>https://h4ck3rm1k3.wordpress.com</font></td></tr></table> > ] 
+# http://www.w3.org/2000/01/rdf-schema#Resource node4
+node4 [ shape=none, color=black label=< <table color='#666666' cellborder='0' cellspacing='0' border='1'><tr><td colspan='2' bgcolor='grey'><B>Resource</B></td></tr><tr><td href='http://www.w3.org/2000/01/rdf-schema#Resource' bgcolor='#eeeeee' colspan='2'><font point-size='10' color='#6666ff'>http://www.w3.org/2000/01/rdf-schema#Resource</font></td></tr></table> > ] 
+# http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement node5
+node5 [ shape=none, color=black label=< <table color='#666666' cellborder='0' cellspacing='0' border='1'><tr><td colspan='2' bgcolor='grey'><B>Statement</B></td></tr><tr><td href='http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement' bgcolor='#eeeeee' colspan='2'><font point-size='10' color='#6666ff'>http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement</font></td></tr></table> > ] 
+# https://www.w3.org/TR/turtle/ node6
+node6 [ shape=none, color=black label=< <table color='#666666' cellborder='0' cellspacing='0' border='1'><tr><td colspan='2' bgcolor='grey'><B>https://www.w3.org/TR/turtle/</B></td></tr><tr><td href='https://www.w3.org/TR/turtle/' bgcolor='#eeeeee' colspan='2'><font point-size='10' color='#6666ff'>https://www.w3.org/TR/turtle/</font></td></tr></table> > ] 
+# https://x.com/introsp3ctor node7
+node7 [ shape=none, color=black label=< <table color='#666666' cellborder='0' cellspacing='0' border='1'><tr><td colspan='2' bgcolor='grey'><B>Tweets</B></td></tr><tr><td href='https://x.com/introsp3ctor' bgcolor='#eeeeee' colspan='2'><font point-size='10' color='#6666ff'>https://x.com/introsp3ctor</font></td></tr></table> > ] 
+}
