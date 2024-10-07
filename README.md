@@ -23,6 +23,30 @@ So basically we want to point this at some other repos and then call it via urls
 
 Browse performance result datasets from hugging face and other sources.
 
+#### Filter datasets
+
+Filter performance data and sum it up again under different features.
+
+#### Produce semantic web statements
+
+Produce rdf statements from various sources and allow them to be signed with zkp 
+as to thier execution validity.
+
+#### Create functions from urls
+
+Turn urls in the rdf into lambda functions that take in the context and produce results.
+We want to create functions that are attached to the urls in the rdf and are called for each 
+item when they are used. We can combine the calls from multiple statements in a way that makes sense.
+
+#### Generate new webpages
+
+Generate new websites from the rdf using typescript or python.
+We can use LLMS to help this process.
+
+#### Produce deep graph knowledge embeddings
+
+#### Iframe report
+
 #### Run notebooks
 
 Run reports via notebooks
@@ -112,3 +136,32 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# reporting
+
+We added in the resulting dataset as submodules for processing 
+```
+git submodule add https://huggingface.co/datasets/introspector/o1js-clinic inputs/huggingface/datasets/mina/o1js/o1js-clinic
+git submodule add https://huggingface.co/datasets/introspector/o1js-clinic inputs/huggingface/datasets/mina/o1js-clinic
+git submodule add https://huggingface.co/datasets/introspector/mina-snarky-asts inputs/huggingface/datasets/mina/mina-ocaml-asts
+```
+
+But instead of pushing those results to our docker container, we reference them via urls on hugging face.
+
+`bash ./report.sh  >> frontend/introspector.ttl `
+`rdf2dot frontend/introspector.ttl >  frontend/introspector.dot `
+
+The rdf generated is very simple, we take the clinic html files we found in our submodule
+and create a link to the original file.
+
+```
+for x in `find inputs/huggingface/datasets/mina/o1js-clinic -name \*clinic\*.html`;
+do
+    y=`echo $x | sed -e's!inputs/huggingface/datasets/mina/o1js-clinic/!!g'`
+    echo "<https://huggingface.co/datasets/introspector/o1js-clinic/resolve/main/${y}>" a "<isp:clinic_report>".;
+done
+
+```
+
+The verb `tree` will display directly, `raw` will show larger data and `resolve` will load the lfs data.
+
