@@ -2,6 +2,9 @@ const N3 = require('n3');
 const fs = require('node:fs');
 const url = require('node:url');
 
+import { isp_clinic_report } from "./clinic_report"
+import { Functions } from "./functions"
+
 type TypeObjectCallback = (subject:string) => string;
 
 interface RdfId {
@@ -14,40 +17,10 @@ interface RdfObject {
     _object: RdfId;
 }
 
-function missing(x: any) {
-    console.log("missing"+ x._object.id);
-}
 
-interface Functions {
-  [key: string]: any;
-}
 
 function statement(x:any) {
     return "fixme"
-}
-
-function isp_clinic_flame_report(report_url:string) {
-    return "flame report" + report_url;
-}
-
-const clinic_functions: Functions = {
-    'clinic-flame': isp_clinic_flame_report
-}
-
-function isp_clinic_report(report_url:string) {
-    const reportUrl = new URL(report_url);
-    const parts = reportUrl.pathname.split("/");
-    const filename  = parts[parts.length-1];
-    const fnparts  = filename.split(".")
-    const fntype  = fnparts[fnparts.length -2];
-
-    const callback = clinic_functions[fntype]
-    if (callback) {
-	return callback(report_url)
-    } else {
-	console.log("missing: " + fntype);
-	clinic_functions[fntype] = missing;
-    }
 }
 
 function isp_self(x: any) {
