@@ -38,6 +38,17 @@ Turn urls in the rdf into lambda functions that take in the context and produce 
 We want to create functions that are attached to the urls in the rdf and are called for each 
 item when they are used. We can combine the calls from multiple statements in a way that makes sense.
 
+#### Embed code in rdf
+
+embed ts code in rdf and execute it according to rules.
+translate ts code into new rdf via expansion, introspection, parsers, 
+clinic js, perf recordings.
+capture traces of executions of the code in statistical profiles.
+
+#### Read submodules
+
+define urls mappings for submodules to repos
+
 #### Generate new webpages
 
 Generate new websites from the rdf using typescript or python.

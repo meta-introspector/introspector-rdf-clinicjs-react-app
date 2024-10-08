@@ -1,6 +1,6 @@
-[submodule "inputs/huggingface/datasets/mina/o1js"]
+[submodule "inputs/huggingface/datasets/introspector/o1js-peformance-results"]
 	path = inputs/huggingface/datasets/mina/o1js
 	url = https://huggingface.co/datasets/introspector/o1js-peformance-results
-[submodule "inputs/huggingface/datasets/mina/o1js-clinic"]
-	path = inputs/huggingface/datasets/mina/o1js-clinic
+[submodule "inputs/huggingface/datasets/introspector/o1js-clinic"]
+	path = inputs/huggingface/datasets/introspector/o1js-clinic
 	url = https://huggingface.co/datasets/introspector/o1js-clinic
