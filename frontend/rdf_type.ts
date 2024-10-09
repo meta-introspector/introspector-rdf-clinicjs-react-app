@@ -7,7 +7,7 @@ export function rdf_type(type_function: TypeObjectCallback, subj:string) {
     //console.log("rdf type subj:" + typeof(subj) );
     if (typeof(type_function)=="function") {
 	const instance = type_function(subj);
-	console.log("instance:"+ instance );
+	//console.log("rdf_type instance:" + type_function + " result: "+ instance );
 	return instance;
     }    
 }
