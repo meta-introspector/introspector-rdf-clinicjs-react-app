@@ -43,8 +43,6 @@ export interface iFrame {
 
 
 function frame_test(f: iFrame){
-    //console.log(".");
-    //clinic_report.ts:53:23 - error TS2345: Argument of type '(value: object, index: number) => void' is not assignable to parameter of type '() => iFrame'.
     function report_child(previousValue: iFrame, currentValue: iFrame, currentIndex: number, array: iFrame[]): iFrame {
 	let sum = 0;
 	if (currentValue){
@@ -67,19 +65,9 @@ function createRunningSumFunctor(f:any) {
 	    const obj = f(value);
 	    if (obj !== undefined) {
 		function report_child(value:object,index:number){
-		    //console.log(JSON.stringify(x,null,2));
-		    //console.log(x);
-		    //console.log(y);
 		    if (value){
-			//if (value.children) {
-			//console.log(JSON.stringify(value,null,2));
 			let res = frame_test(value as iFrame);
-			//console.log(res);
 			sum = sum + res
-			//value.children.forEach(report_child); //recurse
-		    //} else {
-
-		    //}
 		    }
 		}
 		//Object.getOwnPropertyNames(obj).forEach(report);
