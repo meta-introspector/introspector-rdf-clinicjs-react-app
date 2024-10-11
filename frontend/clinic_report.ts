@@ -41,30 +41,58 @@ export interface iFrame {
     children: iFrame[];
 };
 
+//Object.getOwnPropertyNames(obj).forEach(report);
+//appName
+//pathSeparator
+//codeAreas
+//merged
+//unmerged
 
-function frame_test(f: iFrame){
-    function report_child(previousValue: iFrame, currentValue: iFrame, currentIndex: number, array: iFrame[]): iFrame {
+
+function frame_test(f: iFrame,parent:string){
+    function report_child(previousValue: iFrame, currentValue: iFrame, currentIndex: number,
+			  array: iFrame[],
+			  parent_name:string): iFrame {
 
 	if (! currentValue.name.includes("o1js")) {
 	    return {value: 0} as iFrame // return a new object with just the value
 	}
+	const name = parent_name + "|" +currentValue.name;
 	console.log(
 	    "previousValue",
 	    JSON.stringify(previousValue).length);
+	//console.log("previousValue.name",previousValue.name);
 	console.log("currentValue",JSON.stringify(currentValue).length);
-	console.log("currentValue.name",currentValue.name);
+	//console.log("name",currentValue.name);
+
+	console.log("name",name);
+	console.log("functionName",currentValue.functionName);
+	//console.log("type",currentValue.type); v8
+	//console.log("target",currentValue.target); empty
+	//console.log("category",currentValue.category);  all-v8
 	
 	console.log("currentIndex",JSON.stringify(currentIndex));
 	console.log("array",JSON.stringify(array.length))
+	
+	console.log("array[*] join name",array.map( (x) => x.name).join("|"))
+	
 	let sum = 0;
 	if (currentValue){
 	    sum = sum + currentValue.value; // add the current value
-	    sum = sum + frame_test(currentValue); // add the children
+	    sum = sum + frame_test(currentValue,name); // add the children
 	}
 	let ret  = {value: sum} as iFrame // return a new object with just the value
 	return ret;
     }
-    let res = f.children.reduce(report_child,{value:f.value} as iFrame); //recurse
+    
+    function wrapper(previousValue: iFrame, currentValue: iFrame, currentIndex: number, array: iFrame[]): iFrame {
+	return report_child(previousValue,
+			    currentValue,
+			    currentIndex,
+			    array,
+			    parent);
+    }
+    let res = f.children.reduce(wrapper,{value:f.value} as iFrame); //recurse
     //console.log(JSON.stringify(res.value));
     return res.value;
 }
@@ -74,37 +102,14 @@ function createRunningSumFunctor(f:any) {
     let sum:number = 0;
     return function(value?: string): number {
 	if (value !== undefined) {
-	    const obj = f(value);
+	    const obj = f(value);// apply f
 	    if (obj !== undefined) {
 		function report_child(value:object,index:number){
 		    if (value){
-			let res = frame_test(value as iFrame);
+			let res = frame_test(value as iFrame, "root");
 			sum = sum + res
 		    }
 		}
-		//Object.getOwnPropertyNames(obj).forEach(report);
-		//appName
-		//pathSeparator
-		//codeAreas
-		//merged
-		//unmerged
-		//Object.getOwnPropertyNames(obj.merged).forEach(report);
-		// 		id
-		// name
-		// fileName
-		// functionName
-		// lineNumber
-		// columnNumber
-		// target
-		// type
-		// category
-		// isOptimized
-		// isUnoptimized
-		// isInlinable
-		// isInit
-		// value
-		// onStackTop
-		// children
 		//obj.merged.children.forEach(report);
 		obj.unmerged.children.forEach(report_child);		
 		//obj.merged.forEach(report);
