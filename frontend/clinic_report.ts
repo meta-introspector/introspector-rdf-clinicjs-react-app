@@ -44,6 +44,18 @@ export interface iFrame {
 
 function frame_test(f: iFrame){
     function report_child(previousValue: iFrame, currentValue: iFrame, currentIndex: number, array: iFrame[]): iFrame {
+
+	if (! currentValue.name.includes("o1js")) {
+	    return {value: 0} as iFrame // return a new object with just the value
+	}
+	console.log(
+	    "previousValue",
+	    JSON.stringify(previousValue).length);
+	console.log("currentValue",JSON.stringify(currentValue).length);
+	console.log("currentValue.name",currentValue.name);
+	
+	console.log("currentIndex",JSON.stringify(currentIndex));
+	console.log("array",JSON.stringify(array.length))
 	let sum = 0;
 	if (currentValue){
 	    sum = sum + currentValue.value; // add the current value
