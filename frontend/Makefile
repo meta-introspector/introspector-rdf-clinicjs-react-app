@@ -1,3 +1,5 @@
+filter:
+	npx ts-node ./filter.ts
 
 test:
 	npx ts-node ./process.ts

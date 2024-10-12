@@ -11,7 +11,8 @@ const functions: Functions = {
     'http://www.w3.org/1999/02/22-rdf-syntax-ns#type': rdf_type
 }
 
-export function find_function(x:string) {
+export function find_function(x:string, callback:any) {
+    // skip callback for now
     return functions[x];
 }
 

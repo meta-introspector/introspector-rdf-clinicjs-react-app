@@ -5,7 +5,7 @@ import { associate_cache, save_cache } from "./cache"
 const fs = require('node:fs');
 
 
-function process_chunk(line:string)
+function process_chunk(line:string,callback:any)
 {
     const begins = "module.exports="
     if (line.includes("childrenVisibilityToggle") && (line.includes(begins))) {
@@ -16,6 +16,7 @@ function process_chunk(line:string)
 	//let runnable = eval(line);
 	//runnable.Run("module.exports").then((result:string)=>{console.log(result);});
 	// console.log(JSON.stringify(obj,null,2));
+//	callback.process_raw_module_export(obj);
 	return obj;
     }
     return undefined;
@@ -49,12 +50,17 @@ export interface iFrame {
 //unmerged
 
 
-function frame_test(f: iFrame,parent:string){
-    function report_child(previousValue: iFrame, currentValue: iFrame, currentIndex: number,
+function frame_test(f: iFrame,parent:string,callback:any){
+    function report_child(previousValue: iFrame,
+			  currentValue: iFrame,
+			  currentIndex: number,
 			  array: iFrame[],
-			  parent_name:string): iFrame {
+			  parent_name:string,
+			  callback:any): iFrame {
 
-	if (! currentValue.name.includes("o1js")) {
+	if(!callback.filter_current_value(currentValue))
+	    //	if (! currentValue.name.includes("o1js"))
+	{
 	    return {value: 0} as iFrame // return a new object with just the value
 	}
 	const name = parent_name + "|" +currentValue.name;
@@ -79,7 +85,7 @@ function frame_test(f: iFrame,parent:string){
 	let sum = 0;
 	if (currentValue){
 	    sum = sum + currentValue.value; // add the current value
-	    sum = sum + frame_test(currentValue,name); // add the children
+	    sum = sum + frame_test(currentValue,name,callback); // add the children
 	}
 	let ret  = {value: sum} as iFrame // return a new object with just the value
 	return ret;
@@ -90,28 +96,29 @@ function frame_test(f: iFrame,parent:string){
 			    currentValue,
 			    currentIndex,
 			    array,
-			    parent);
+			    parent,
+			    callback);
     }
     let res = f.children.reduce(wrapper,{value:f.value} as iFrame); //recurse
     //console.log(JSON.stringify(res.value));
     return res.value;
 }
 
-function createRunningSumFunctor(f:any) {
+function createRunningSumFunctor(f:any,callback:any) {
     let objects:object[] = [];
     let sum:number = 0;
     return function(value?: string): number {
 	if (value !== undefined) {
-	    const obj = f(value);// apply f
+	    const obj = f(value,callback);// apply f
 	    if (obj !== undefined) {
-		function report_child(value:object,index:number){
+		function report_child2(value:object,index:number){
 		    if (value){
-			let res = frame_test(value as iFrame, "root");
+			let res = frame_test(value as iFrame, "root", callback);
 			sum = sum + res
 		    }
 		}
 		//obj.merged.children.forEach(report);
-		obj.unmerged.children.forEach(report_child);		
+		obj.unmerged.children.forEach(report_child2);		
 		//obj.merged.forEach(report);
 		//obj.unmerged.forEach(report);
 		
@@ -122,25 +129,25 @@ function createRunningSumFunctor(f:any) {
     };
 }
 
-function process_flame_report(filename:string, data:string) {
-    let sumfunc:any = createRunningSumFunctor(process_chunk);
+function process_flame_report(filename:string, data:string, callback:any) {
+    let sumfunc:any = createRunningSumFunctor(process_chunk,callback);
     if (data) {
 	data.split("\n").forEach(sumfunc);
     }
-    let sum:number = sumfunc();
+    let sum:number = sumfunc(callback);
     console.log(filename + "sum : " + sum);
     return sum;
 }
 
-function createProcessor(filename:string) {
+function createProcessor(filename:string,callback:any) {
     return function(err:any, data:string) {	
-	return process_flame_report(filename, data);
+	return process_flame_report(filename, data, callback);
     }
 }
 
-function isp_clinic_flame_report(report_url:string, data:any) {
+function isp_clinic_flame_report(report_url:string, data:any, callback:any) {
     //console.log("file: " + data.newpath);
-    let functor = createProcessor(data.newpath);
+    let functor = createProcessor(data.newpath,callback);
     fs.readFile(data.newpath, "utf-8",functor);
     return "flame report:" + report_url;
 }
@@ -149,7 +156,7 @@ const clinic_functions: Functions = {
     'clinic-flame': isp_clinic_flame_report
 }
 
-export function isp_clinic_report(report_url:string) {
+export function isp_clinic_report(report_url:string,callback:any) {
     const reportUrl = new URL(report_url);
     const parts = reportUrl.pathname.split("/");
     const hostname = reportUrl.hostname;
@@ -157,13 +164,13 @@ export function isp_clinic_report(report_url:string) {
     const fnparts  = filename.split(".")
     const fntype  = fnparts[fnparts.length -2];
 
-    const callback = clinic_functions[fntype]
+    const callback_function = clinic_functions[fntype]
     // now lets construct a cache
     const cached = associate_cache(report_url,hostname,parts,fnparts);
     var data = "missing";
 
-    if (callback) {
-	data = callback(report_url, cached);
+    if (callback_function) {
+	data = callback_function(report_url, cached);
     } else {
 	console.log("missing: " + fntype);
 	clinic_functions[fntype] = missing;
