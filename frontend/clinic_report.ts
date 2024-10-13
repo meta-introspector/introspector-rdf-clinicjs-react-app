@@ -8,17 +8,29 @@ const fs = require('node:fs');
 function process_chunk(line:string,callback:any)
 {
     const begins = "module.exports="
-    if (line.includes("childrenVisibilityToggle") && (line.includes(begins))) {
-	const bl = begins.length;
-	//console.log("chunk: " + line.substring(bl,20));
-	const chunk = line.substring(bl,line.length);
-	let obj = JSON.parse(chunk)
-	//let runnable = eval(line);
-	//runnable.Run("module.exports").then((result:string)=>{console.log(result);});
-	// console.log(JSON.stringify(obj,null,2));
-//	callback.process_raw_module_export(obj);
-	return obj;
+    if (line) {
+	if (line.includes) {
+	    if (line.includes("childrenVisibilityToggle") && (line.includes(begins))) {
+		const bl = begins.length;
+		//console.log("chunk: " + line.substring(bl,20));
+		const chunk = line.substring(bl,line.length);
+		let obj = JSON.parse(chunk)
+		//let runnable = eval(line);
+		//runnable.Run("module.exports").then((result:string)=>{console.log(result);});
+		// console.log(JSON.stringify(obj,null,2));
+		//	callback.process_raw_module_export(obj);
+		callback.debug("got chunk");
+		return obj;
+	    }	    
+	}
+	else {
+	    //console.log("no function")
+	}
     }
+    else {
+	//console.log("no line")
+    }
+
     return undefined;
 }
 
@@ -58,33 +70,33 @@ function frame_test(f: iFrame,parent:string,callback:any){
 			  parent_name:string,
 			  callback:any): iFrame {
 
+	callback.debug("report child");
 	if(!callback.filter_current_value(currentValue))
 	    //	if (! currentValue.name.includes("o1js"))
 	{
 	    return {value: 0} as iFrame // return a new object with just the value
 	}
 	const name = parent_name + "|" +currentValue.name;
-	console.log(
-	    "previousValue",
-	    JSON.stringify(previousValue).length);
+	//console.log(	    "previousValue",	    JSON.stringify(previousValue).length);
 	//console.log("previousValue.name",previousValue.name);
-	console.log("currentValue",JSON.stringify(currentValue).length);
+//	console.log("currentValue",JSON.stringify(currentValue).length);
 	//console.log("name",currentValue.name);
 
-	console.log("name",name);
-	console.log("functionName",currentValue.functionName);
+//	console.log("name",name);
+//	console.log("functionName",currentValue.functionName);
 	//console.log("type",currentValue.type); v8
 	//console.log("target",currentValue.target); empty
 	//console.log("category",currentValue.category);  all-v8
 	
-	console.log("currentIndex",JSON.stringify(currentIndex));
-	console.log("array",JSON.stringify(array.length))
+//	console.log("currentIndex",JSON.stringify(currentIndex));
+//	console.log("array",JSON.stringify(array.length))
 	
-	console.log("array[*] join name",array.map( (x) => x.name).join("|"))
+///	console.log("array[*] join name",array.map( (x) => x.name).join("|"))
 	
 	let sum = 0;
 	if (currentValue){
 	    sum = sum + currentValue.value; // add the current value
+//	    callback.debug("check")
 	    sum = sum + frame_test(currentValue,name,callback); // add the children
 	}
 	let ret  = {value: sum} as iFrame // return a new object with just the value
@@ -99,16 +111,19 @@ function frame_test(f: iFrame,parent:string,callback:any){
 			    parent,
 			    callback);
     }
+    callback.debug("reduce");
     let res = f.children.reduce(wrapper,{value:f.value} as iFrame); //recurse
     //console.log(JSON.stringify(res.value));
     return res.value;
 }
 
 function createRunningSumFunctor(f:any,callback:any) {
+    callback.debug("runningsum");
     let objects:object[] = [];
     let sum:number = 0;
     return function(value?: string): number {
 	if (value !== undefined) {
+	    
 	    const obj = f(value,callback);// apply f
 	    if (obj !== undefined) {
 		function report_child2(value:object,index:number){
@@ -130,6 +145,7 @@ function createRunningSumFunctor(f:any,callback:any) {
 }
 
 function process_flame_report(filename:string, data:string, callback:any) {
+    callback.debug("flame");
     let sumfunc:any = createRunningSumFunctor(process_chunk,callback);
     if (data) {
 	data.split("\n").forEach(sumfunc);
@@ -147,6 +163,7 @@ function createProcessor(filename:string,callback:any) {
 
 function isp_clinic_flame_report(report_url:string, data:any, callback:any) {
     //console.log("file: " + data.newpath);
+    callback.debug("ispflame");
     let functor = createProcessor(data.newpath,callback);
     fs.readFile(data.newpath, "utf-8",functor);
     return "flame report:" + report_url;
@@ -157,6 +174,7 @@ const clinic_functions: Functions = {
 }
 
 export function isp_clinic_report(report_url:string,callback:any) {
+    callback.debug("clinit report");
     const reportUrl = new URL(report_url);
     const parts = reportUrl.pathname.split("/");
     const hostname = reportUrl.hostname;
@@ -170,7 +188,7 @@ export function isp_clinic_report(report_url:string,callback:any) {
     var data = "missing";
 
     if (callback_function) {
-	data = callback_function(report_url, cached);
+	data = callback_function(report_url, cached, callback);
     } else {
 	console.log("missing: " + fntype);
 	clinic_functions[fntype] = missing;
